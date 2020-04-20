@@ -3,7 +3,6 @@ import { StyleSheet, Text, SafeAreaView, SectionList, TouchableOpacity } from 'r
 import Row from './Row';
 import PropTypes from 'prop-types'
 
-const renderItem = ({item, index}) => <Row index={index} {...item} />
 const renderSectionHeader = ({section}) => <Text style={styles.header}>{section.title}</Text>
 
 const SectionListContacts = (props) => {
@@ -26,9 +25,9 @@ const SectionListContacts = (props) => {
                 <Text style={styles.sortText}> Sort</Text> 
             </TouchableOpacity>
             <SectionList
-                //keyExtractor={(item, index) => item + index}
+                keyExtractor={(item) => item.phone}
                 sections={sections}
-                renderItem={renderItem}
+                renderItem={({item, index}) => <Row index={index} {...item} onSelectContact={props.onSelectContact} />}
                 renderSectionHeader={renderSectionHeader}
                 />
         </SafeAreaView>
