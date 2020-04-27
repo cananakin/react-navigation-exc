@@ -16,7 +16,8 @@ class AddContactForm extends React.Component {
 
     onSubmitForm = () => {
         const { name, phone } = this.state;
-        this.props.onAddedContact({ name: name,phone: phone })
+        //this.props.onAddedContact({ name: name,phone: phone })
+        this.props.onSubmit({ name: name, phone: phone })
     }
 
     onChangeName = (text) => { this.onChangeInput('name',text) } 
@@ -38,7 +39,6 @@ class AddContactForm extends React.Component {
 
     render () {
         const { name, phone } = this.state;
-        const { onCancelled } = this.props;
         return (
             <KeyboardAvoidingView behavior="padding" style={{flex: 1}}>
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

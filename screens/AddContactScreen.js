@@ -1,18 +1,20 @@
 import React from 'react'
-import AddContactForm from '../AddContactForm';
+import AddContactForm from '../components/AddContactForm';
+//import { AuthContext } from '../context';
+import { connect } from 'react-redux';
+import { addContact } from '../redux/actions';
 
-class AddContactScreen extends React.Component {
-    static navigationOptions = {
-        headerTitle: 'New Contact'
+const AddContactScreen = (props) => {
+    const { navigation } = props;
+    //const { refleshContacts } = React.useContext(AuthContext);
+    const handleSubmit  = (formState) => {
+        //refleshContacts(formState);
+        props.addContact(formState);
+        navigation.navigate('ContactList')
+        //navigation.navigate('ContactList', { newData: formState })
     }
-
-    handleSubmit  = formState => {
-        this.props.screenProps.addContact(formState);
-        this.props.navigation.navigation('ContactList'); 
-    }
-    render() {
-        return <AddContactForm onSubmit={this.onSubmit} />
-    }
+    
+    return <AddContactForm onSubmit={handleSubmit} />
 }
 
-export default AddContactScreen;
+export default connect(null, { addContact: addContact })(AddContactScreen);

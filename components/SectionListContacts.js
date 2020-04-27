@@ -14,11 +14,13 @@ const SectionListContacts = (props) => {
             [firstLetter]: [...(obj[firstLetter] || []), contact],
         }
     }, {})
+
     const sections = Object.keys(contactsByLetter).sort().map(letter => ({
         key: letter,
         data: contactsByLetter[letter],
         title: letter
     }))
+    
     return (
         <SafeAreaView style={styles.container}>
             <TouchableOpacity style={styles.sort} onPress={props.sortedContact}> 

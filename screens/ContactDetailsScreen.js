@@ -1,51 +1,36 @@
-import React, { useLayoutEffect } from 'react';
-import { Button, Text, View } from 'react-native';
+import React from 'react';
+import { Button, Text, View, StyleSheet } from 'react-native';
+import { AuthContext } from '../context';
 
-// static navigationOptions = ({ navigation }) => {
-//     console.log(navigation)
-//     return {
-//       headerTitle: navigation.getParam('name'),
-//     };
-//   };
-
-export default function ContactDetailsScreen({ route,navigation }) {
-	const [count, setCount] = React.useState(0);
-	console.log(route)
-	
-	navigation.setOptions({
-		headerRight: () => (
-			<Button title="Update count" />
-		),
-		headerTitle: route.params.name,
-	});
-	goToRandomContact = () => {
-		console.log(this.props)
-		//const { contacts } = this.props.screenProps;
-		const { phone } = route.params;
-		console.log(phone)
+export default ContactDetailsScreen = ({ navigation, route }) => {
+	//const { refleshContacts } = React.useContext(AuthContext);
+	randomGoto = () => {
+		const contacts = route.params.contacts;
+		const phone = route.params.contact.phone;
 		let randomContact;
 		while (!randomContact) {
 			const randomIndex = Math.floor(Math.random() * contacts.length);
-			if (contacts[randomIndex].phone !== phone) {
+			if(contacts[randomIndex].phone !== phone){
 				randomContact = contacts[randomIndex];
 			}
 		}
-
-		// this.props.navigation.navigate('ContactDetails', {
-		//   ...randomContact,
-		// });
-		navigation.push('ContactDetails', {
-			...randomContact,
-		});
-	};
-
+		navigation.navigate('ContactDetails', { contact: randomContact, contacts: contacts })
+	}
+	
 	return (
-		<View>
-			<Text>{route.params.phone}</Text>
-			<Button title="Go to random contact" onPress={this.goToRandomContact} />
-		</View>
-	);
+	<View style={styles.container}>
+		<Text>{route.params.contact.phone}</Text>
+		<Button title="Go to random contact" onPress={() => randomGoto() } />
+	</View>);
+	
+};
 
-
-
-}
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		backgroundColor: '#fff',
+		paddingTop: 10,
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
+});
